@@ -1,0 +1,72 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+
+
+# INSTALL Services
+     - name: NGINX | add NGINX signing key
+       apt_key: 
+          url=http://nginx.org/keys/nginx_signing.key 
+          state=present
+
+     - name: NGINX | Add Nginx repo
+       apt_repository:
+         repo: ppa:nginx/development
+
+     - name: NGINX | Updating apt cache
+       apt:
+         update_cache: yes
+ 
+     - name: Check Nginx configs exist
+       stat: path=/etc/nginx
+       register: nginx_exists
+ 
+     - name: NGINX | Installing NGINX
+       apt:
+         pkg: nginx
+         state: latest
+       when: not nginx_exists.stat.exists
+
+     - name: clone git repository
+       git:
+        repo: https://github.com/jonrankin/cf-test-server.git
+        dest: /etc/cf-server/
+        clone: yes
+        force: yes
+
+
+     - name: Install requirements
+       pip:
+         requirements: /etc/cf-server/requirements.txt
+         virtualenv: /etc/cf-server/@cf-server
+         virtualenv_python: python2.7
+
+# CONFIGURE SERVICES
+
+     - name: Configure Server
+       command "{{ item }}"
+       with_items:
+           - cp -r /etc/cf-server/templates/config/nginx/ /etc/nginx/sites-enabled
+           - systemctl daemon-reload
+           - cp -r /etc/vf-server/templates/config/service/ /etc/systemd/system/
+
+# START SERVICES
+
+     - name: SERVICES | NGINX
+       service:
+         name: nginx
+         state: restarted
+
+     - name: SERVICES | HTTPBIN
+       service:
+         name: httpbin.service
+         state: restarted
+
+     - name: SERVICES | CF-COMPARE      
+       service:
+         name: cf-compare.service
+         state: restarted
+
+       
+

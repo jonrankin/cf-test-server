@@ -1,0 +1,14 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+ 
+[Service]
+PIDFile=/run/gunicorn/pid
+WorkingDirectory=/etc/cf-server/
+ExecStart=/home/jon/cf-server/@cf-server/bin/gunicorn --bind 127.0.0.1:8001  cf-compare:app
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+ 
+[Install]
+WantedBy=multi-user.target
