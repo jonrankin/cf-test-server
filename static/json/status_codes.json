@@ -1,0 +1,77 @@
+{
+	"200": {
+		"message": "OK",
+		"image": "200.jpeg",
+		"flavour": ""
+	},
+	"201": {
+		"message": "Created",
+		"image": "201.png",
+		"flavour": ""
+	},
+	"204": {
+		"message": "Not Content",
+		"image": "204.png",
+		"flavour": ""
+	},
+        "301": {
+                "message": "Moved Permanently",
+                "image": "301.png",
+                "flavour": ""
+        },
+        "307": {
+                "message": "Temporary Redirect",
+                "image": "301.png",
+                "flavour": ""
+        },
+	"400": {
+		"message": "Bad Request",
+		"image": "400.png",
+		"flavour": ""
+	},
+	"401": {
+		"message": "Unauthorized",
+		"image": "401.png",
+		"flavour": ""
+	},
+	"403": {
+		"message": "Forbidden",
+		"image": "403.jpg",
+		"flavour": ""
+	},
+	"404": {
+		"message": "Not Found",
+		"image": "404.jpg",
+		"flavour": ""
+	},
+	"409": {
+		"message": "Conflict",
+		"image": "409.png",
+		"flavour": ""
+	},
+	"500": {
+		"message": "Internal Server Error",
+		"image": "500.png",
+		"flavour": ""
+	},
+	"501": {
+		"message": "Not Implemented",
+		"image": "501.png",
+		"flavour": ""
+	},
+	"502": {
+		"message": "Bad Gateway",
+		"image": "502.png",
+		"flavour": ""
+	},
+	"503": {
+		"message": "Service Unavailable",
+		"image": "503.png",
+		"flavour": ""
+	},
+	"504": {
+		"message": "Bad Request",
+		"image": "504.png",
+		"flavour": ""
+	}
+}
