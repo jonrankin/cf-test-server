@@ -45,9 +45,11 @@
 # CONFIGURE SERVICES
 
      - name: Configure Server
-       command "{{ item }}"
+       command: "{{ item }}"
        with_items:
-           - cp -r /etc/cf-server/templates/config/nginx/ /etc/nginx/sites-enabled && systemctl daemon-reload && cp -r /etc/vf-server/templates/config/service/ /etc/systemd/system/
+           - cp -r /etc/cf-server/templates/config/nginx/ /etc/nginx/sites-enabled
+           - systemctl daemon-reload && cp -r /etc/vf-server/templates/config/service/ 
+           - /etc/systemd/system/
 
 # START SERVICES
 
