@@ -35,6 +35,10 @@
         clone: yes
         force: yes
 
+     - name: INSTALL | python-virtualenv
+       apt:
+         pkg: python-virtualenv
+         state: latest
 
      - name: Install requirements
        pip:
