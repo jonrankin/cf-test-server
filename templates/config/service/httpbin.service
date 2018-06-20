@@ -5,6 +5,7 @@ After=network.target
 [Service]
 PIDFile=/run/gunicorn/pid
 WorkingDirectory=/etc/cf-server/
+Environment ="PATH=/etc/cf-server/@cf-server/bin/"
 ExecStart=/etc/cf-server/@cf-server/bin/gunicorn --bind 0.0.0.0:8000 httpbin:app
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID

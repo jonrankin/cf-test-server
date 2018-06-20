@@ -52,9 +52,11 @@
        command: "{{ item }}"
        become: yes
        with_items:
-           - cp -r /etc/cf-server/templates/config/nginx/ /etc/nginx/sites-enabled
-           - systemctl daemon-reload && cp -r /etc/vf-server/templates/config/service/ 
-           - /etc/systemd/system/
+           - cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
+           - systemctl daemon-reload
+           - cp /etc/cf-server/templates/config/service/cf-compare.service /etc/systemd/system
+           - cp /etc/cf-server/templates/config/service/httpbin.service /etc/systemd/system
+       sudo: yes
 
 # START SERVICES
 
