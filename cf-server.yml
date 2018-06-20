@@ -35,6 +35,10 @@
         clone: yes
         force: yes
 
+     - name: INSTALL | python-virtualenv
+       apt:
+         pkg: python-virtualenv
+         state: latest
 
      - name: Install requirements
        pip:
@@ -45,11 +49,13 @@
 # CONFIGURE SERVICES
 
      - name: Configure Server
-       command "{{ item }}"
+       command: "{{ item }}"
        with_items:
-           - cp -r /etc/cf-server/templates/config/nginx/ /etc/nginx/sites-enabled
+           - cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
+           - cp /etc/cf-server/templates/config/service/cf-compare.service /etc/systemd/system
+           - cp /etc/cf-server/templates/config/service/httpbin.service /etc/systemd/system
            - systemctl daemon-reload
-           - cp -r /etc/vf-server/templates/config/service/ /etc/systemd/system/
+       sudo: yes
 
 # START SERVICES
 
