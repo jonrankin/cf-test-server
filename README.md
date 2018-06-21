@@ -9,6 +9,10 @@ The application supports Ansible which will install all required services, code,
 
 NGINX will run on port 80 proxying to the flask app on localhost port 8000 and 8001.
 
+**Note:** You will need to copy ssl keys to the server under /etc/nginx/ssl for this to work. The playbook will have issues starting the nginx server. The key files will need to be named:
+* *Private Key:* privkey.pem
+* *Public Key:* fullchain.pem
+
 To install just enter these commands:
 ```
 sudo apt install ansible
