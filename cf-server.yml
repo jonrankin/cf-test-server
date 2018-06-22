@@ -1,7 +1,10 @@
 ---
 - hosts: localhost
   become: true
+  vars:
+     ssl_keys: /etc/ssl
   tasks:
+
 
 
 # INSTALL Services
@@ -46,12 +49,24 @@
          virtualenv: /etc/cf-server/@cf-server
          virtualenv_python: python2.7
 
-# CONFIGURE SERVICES
+# CONFIGURE NGINX
+     - name: CONFIGURE | NGINX INSTALL TYPE
+       local_action: stat path='{{ ssl_keys }}/fullchain.pem'
 
-     - name: Configure Server
+       register: ssl_key_check
+     - name: CONFIGURE | NGINX
+       command: cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
+       when: ssl_key_check.stat.exists == FALSE
+
+     - name: CONFIGURE | NGINX-SSL
+       command: cp /etc/cf-server/templates/config/nginx/cf-server-ssl /etc/nginx/sites-enabled
+       when: ssl_key_check.stat.exists == TRUE
+
+
+# CONFIGURE SERVICES
+     - name: CONFIGURE | SERVICES
        command: "{{ item }}"
        with_items:
-           - cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
            - cp /etc/cf-server/templates/config/service/cf-compare.service /etc/systemd/system
            - cp /etc/cf-server/templates/config/service/httpbin.service /etc/systemd/system
            - systemctl daemon-reload
