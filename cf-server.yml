@@ -81,7 +81,6 @@
      - name: CONFIGURE | SERVICES
        command: "{{ item }}"
        with_items:
-           - rm /etc/nginx/sites-enabled/default
            - cp /etc/cf-server/templates/config/service/cf-compare.service /etc/systemd/system
            - cp /etc/cf-server/templates/config/service/httpbin.service /etc/systemd/system
            - systemctl daemon-reload
