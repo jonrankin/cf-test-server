@@ -58,6 +58,11 @@
        command: cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
        when: ssl_key_check.stat.exists == False
 
+     - name: CONFIGURE | NGINX-KEYS
+       command: cp -r /etc/ssl /etc/nginx
+       sudo: yes
+       when: ssl_key_check.stat.exists == True
+
      - name: CONFIGURE | NGINX-SSL
        command: cp /etc/cf-server/templates/config/nginx/cf-server-ssl /etc/nginx/sites-enabled
        when: ssl_key_check.stat.exists == True
@@ -67,6 +72,7 @@
      - name: CONFIGURE | SERVICES
        command: "{{ item }}"
        with_items:
+           - rm /etc/nginx/sites-enabled/default
            - cp /etc/cf-server/templates/config/service/cf-compare.service /etc/systemd/system
            - cp /etc/cf-server/templates/config/service/httpbin.service /etc/systemd/system
            - systemctl daemon-reload
