@@ -56,11 +56,11 @@
        register: ssl_key_check
      - name: CONFIGURE | NGINX
        command: cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
-       when: ssl_key_check.stat.exists == FALSE
+       when: ssl_key_check.stat.exists == False
 
      - name: CONFIGURE | NGINX-SSL
        command: cp /etc/cf-server/templates/config/nginx/cf-server-ssl /etc/nginx/sites-enabled
-       when: ssl_key_check.stat.exists == TRUE
+       when: ssl_key_check.stat.exists == True
 
 
 # CONFIGURE SERVICES
@@ -78,7 +78,7 @@
        service:
          name: nginx
          state: restarted
-         ignore_errors: yes
+       ignore_errors: yes
 
      - name: SERVICES | HTTPBIN
        service:
