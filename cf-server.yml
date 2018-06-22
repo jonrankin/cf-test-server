@@ -52,8 +52,17 @@
 # CONFIGURE NGINX
      - name: CONFIGURE | NGINX INSTALL TYPE
        local_action: stat path='{{ ssl_keys }}/fullchain.pem'
-
        register: ssl_key_check
+
+     - name: CONFIGURE | NGINX DEFAULT SITE
+       local_action: stat path='/etc/nginx/sites-enabled/default'
+       register: default_site
+
+     - name: CONFIGURE | NGINX DELETE DEFAULT SITE
+       command: rm /etc/nginx/sites-enabled/default
+       sudo: yes
+       when: default_site.stat.exists == True
+
      - name: CONFIGURE | NGINX
        command: cp /etc/cf-server/templates/config/nginx/cf-server /etc/nginx/sites-enabled
        when: ssl_key_check.stat.exists == False
